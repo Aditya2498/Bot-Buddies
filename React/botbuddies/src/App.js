@@ -3,6 +3,7 @@ import Cardlist from './Cardlist';
 import Searchbox from './Searchbox';
 import {robots}  from './robots';
 import './App.css';
+import Scroll from './Scroll';
 
 
 class App extends Component { 
@@ -37,8 +38,10 @@ class App extends Component {
           <div className = 'tc'>
           <h1 className='f1' >Bot Buddies</h1>
           <Searchbox searchChange = {this.onSearchchange}  />
+          <Scroll>
           <Cardlist robots={filterbots}/>
-          </div>
+          </Scroll>
+           </div>
           );
        }
 
@@ -50,6 +53,4 @@ class App extends Component {
 
 }
    
-
-
 export default App;
