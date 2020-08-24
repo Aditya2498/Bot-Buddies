@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import Cardlist from './Cardlist';
-import Searchbox from './Searchbox';
-import {robots}  from './robots';
+import Cardlist from '../components/Cardlist';
+import Searchbox from '../components/Searchbox';
+import {robots}  from '../robots.js';
 import './App.css';
-import Scroll from './Scroll';
+import Scroll from '../components/Scroll';
+import ErrorBoundary from '../components/Error';
 
 
 class App extends Component { 
@@ -27,19 +28,21 @@ class App extends Component {
      }
    
      render() {
-       
-       const filterbots = this.state.robots.filter(robots =>{
-         return robots.name.toLowerCase().includes(this.state.searchfield.toLowerCase())
+         const {robots,searchfield} = this.state;
+       const filterbots = robots.filter(robots =>{
+         return robots.name.toLowerCase().includes(searchfield.toLowerCase())
        })
-       if(this.state.robots.length === 0){
-         return <h1>Assembling Bots</h1>}
-       else {
-        return (
+       
+         return !robots.length ?
+         <h1>Assembling Bots</h1> :
+         (
           <div className = 'tc'>
           <h1 className='f1' >Bot Buddies</h1>
           <Searchbox searchChange = {this.onSearchchange}  />
           <Scroll>
-          <Cardlist robots={filterbots}/>
+            <ErrorBoundary>
+              <Cardlist robots={filterbots}/>
+             </ErrorBoundary>
           </Scroll>
            </div>
           );
@@ -48,9 +51,4 @@ class App extends Component {
        
      
      }
-   
-   
-
-}
-   
-export default App;
+   export default App;
